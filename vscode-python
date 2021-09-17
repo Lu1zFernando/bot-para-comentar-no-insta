@@ -1,0 +1,107 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+import random
+# primeiro você tem que instalar o pip selenium no cmd.
+# depois você tem que baixar o geckodriver para o python conseguir abrir o firefox no seu computador.
+# coloque geckodriver no google e click no link do github na lista, depois escolha o SO do seu pc, e baixe.
+
+# bot para auto comentarios no instagram.
+
+class InstagramBot:
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+        # abaixo vc vai colocar o endereco da pasta que esta o programa geckodriver,"tem que estar dentro de uma pasta sozinho que o programa ache-o".
+        self.driver = webdriver.Firefox(executable_path="C:/Users/x/Desktop/Programação/geckodriver-v0.30.0-win64/geckodriver.exe")
+
+    def login(self):
+        driver = self.driver
+        driver.get("https://www.instagram.com")
+        time.sleep(3)
+        campo_usuario = driver.find_element_by_xpath("//input[@name='username']")
+        campo_usuario.click()
+        campo_usuario.clear()
+        campo_usuario.send_keys(self.username)
+        campo_senha = driver.find_element_by_xpath("//input[@name='password']")
+        campo_senha.click()
+        campo_senha.clear()
+        campo_senha.send_keys(self.password)
+        campo_senha.send_keys(Keys.RETURN)
+        time.sleep(15)
+        # esse codigo fica no final do https depois que vc abre a foto, apareceré um parecido, e vc cola no lugar desse.
+        self.comente_na_foto_com_o_código('CT2LeIiACX4')
+    
+    @staticmethod
+    def digite_como_uma_pessoa(frase, onde_digitar):
+        for letra in frase:
+            onde_digitar.send_keys(letra)
+            # velocidade da digitação (não deixe muito rapido para instagram não detectar o bot)
+            time.sleep(random.randint(2,5)/30)
+    
+    def comente_na_foto_com_o_código(self, codigo):
+        while True:
+            driver = self.driver
+            driver.get("https://www.instagram.com/p/"+ codigo +"/")
+            time.sleep(5)
+            # coloque a frases que vc quer comentar abaixo sempre entre aspas e separados por virgula.
+            comentarios = ["Tmj Herbert!","Vamo que vamo!","Fé",
+            "Dessa vez eu ganho!","É o braia!","Tudo nosso familia!"]
+            driver.find_element_by_class_name("Ypffh").click()
+            campo_comentario = driver.find_element_by_class_name("Ypffh")
+            # velocidade da digitação
+            time.sleep(random.randint(2, 5))
+            self.digite_como_uma_pessoa(random.choice(comentarios),campo_comentario)
+            time.sleep(random.randint(3, 5))
+            driver.find_element_by_xpath(
+                "//button[contains(text(), 'Publicar')]"
+            ).click()
+            time.sleep(random.randint(3, 5))
+        # depois daqui foi para tratar de uma repetição que eu não sabia como lidar, fuitentando até conseguir.
+        try:
+            comentarios = ["Tmj Herbert!","Vamo que vamo!","Fé",
+            "Dessa vez eu ganho","É o braia","Tudo nosso familia!"]
+            driver.find_element_by_class_name("Ypffh").click()
+            campo_comentario = driver.find_element_by_class_name("Ypffh")
+            time.sleep(random.randint(2, 5))
+            self.digite_como_uma_pessoa(random.choice(comentarios),campo_comentario)
+            time.sleep(random.randint(3, 5))
+            driver.find_element_by_xpath(
+                "//button[contains(text(), 'Publicar')]"
+            ).click()
+            time.sleep(random.randint(3, 5))
+        except Exception as e:
+            print(e)
+            time.sleep(5)
+        else:
+            comentarios = ["Tmj Herbert!","Vamo que vamo!","Fé",
+            "Dessa vez eu ganho","É o braia","Tudo nosso familia!"]
+            driver.find_element_by_class_name("Ypffh").click()
+            campo_comentario = driver.find_element_by_class_name("Ypffh")
+            time.sleep(random.randint(2, 5))
+            self.digite_como_uma_pessoa(random.choice(comentarios),campo_comentario)
+            time.sleep(random.randint(3, 5))
+            driver.find_element_by_xpath(
+                "//button[contains(text(), 'Publicar')]"
+            ).click()
+            time.sleep(random.randint(3, 5))
+        finally:
+            comentarios = ["Tmj Herbert!","Vamo que vamo!","Fé",
+            "Dessa vez eu ganho","É o braia","Tudo nosso familia!"]
+            driver.find_element_by_class_name("Ypffh").click()
+            campo_comentario = driver.find_element_by_class_name("Ypffh")
+            time.sleep(random.randint(2, 5))
+            self.digite_como_uma_pessoa(random.choice(comentarios),campo_comentario)
+            time.sleep(random.randint(3, 5))
+            driver.find_element_by_xpath(
+                "//button[contains(text(), 'Publicar')]"
+            ).click()
+            time.sleep(random.randint(3, 5))
+            
+            
+        
+
+    
+
+luizbot = InstagramBot('_luizmsantos', 'luiz7318.')
+luizbot.login()
